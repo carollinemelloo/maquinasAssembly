@@ -1,4 +1,3 @@
-; monolitico.asm - Soma de 1 até n (versão monolítica)
 default rel
 extern printf
 extern ExitProcess
@@ -11,11 +10,11 @@ section .text
 global main
 
 main:
-    sub rsp, 40         ; Shadow space (32) + alinhamento (8)
+    sub rsp, 40         
 
-    xor rax, rax        ; soma = 0
-    mov rcx, [rel n]    ; rcx = n
-    mov rdx, 1          ; i = 1
+    xor rax, rax        
+    mov rcx, [rel n]   
+    mov rdx, 1         
 
 .loop:
     cmp rdx, rcx
@@ -25,10 +24,9 @@ main:
     jmp .loop
 
 .fim:
-    ; Preparar argumentos para printf
-    lea rcx, [rel msg]  ; 1º argumento: format string
-    mov rdx, rax        ; 2º argumento: resultado da soma
-    xor eax, eax        ; nenhum XMM usado
+    lea rcx, [rel msg]  
+    mov rdx, rax        
+    xor eax, eax       
     call printf
 
     xor ecx, ecx
