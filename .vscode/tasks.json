@@ -1,0 +1,135 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compilar Iterativo",
+            "type": "shell",
+            "command": "nasm",
+            "args": [
+                "-f", "win64",
+                "${workspaceFolder}/iterativo.asm",
+                "-o", "${workspaceFolder}/iterativo.obj"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Compila o código Assembly iterativo"
+        },
+        {
+            "label": "Linkar Iterativo",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+                "-o", "${workspaceFolder}/iterativo.exe",
+                "${workspaceFolder}/iterativo.obj",
+                "-Wl,--image-base=0x10000000",
+                "-Wl,--subsystem=console",
+                "-nostartfiles",
+                "-lkernel32",
+                "-luser32",
+                "-lmsvcrt"
+            ],
+            "group": "build",
+            "dependsOn": "Compilar Iterativo",
+            "problemMatcher": [],
+            "options": {
+                "shell": {
+                    "executable": "cmd.exe",
+                    "args": ["/d", "/c"]
+                }
+            }
+        },
+        {
+            "label": "Executar Iterativo",
+            "type": "process",
+            "command": "${workspaceFolder}\\iterativo.exe",
+            "group": "test",
+            "dependsOn": "Linkar Iterativo",
+            "problemMatcher": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "focus": true
+            }
+        },
+        {
+            "label": "Compilar Monolítico",
+            "type": "shell",
+            "command": "nasm",
+            "args": [
+              "-f", "win64",
+              "${workspaceFolder}/monolitico.asm",
+              "-o", "${workspaceFolder}/monolitico.obj"
+            ],
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Compila o código Assembly monolítico"
+          },
+          {
+            "label": "Linkar Monolítico",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+              "-o", "${workspaceFolder}/monolitico.exe",
+              "${workspaceFolder}/monolitico.obj"
+            ],
+            "group": {
+              "kind": "build",
+              "isDefault": false
+            },
+            "dependsOn": "Compilar Monolítico",
+            "problemMatcher": [],
+            "detail": "Linka o código Assembly monolítico"
+          },
+          {
+            "label": "Executar Monolítico",
+            "type": "shell",
+            "command": ".\\monolitico.exe",
+            "group": {
+              "kind": "test",
+              "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Executa o código Assembly monolítico"
+          },
+          {
+            "label": "Compilar Recursivo",
+            "type": "shell",
+            "command": "nasm",
+            "args": [
+              "-f", "win64",
+              "${workspaceFolder}/recursivo.asm",
+              "-o", "${workspaceFolder}/recursivo.obj"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "Compila o código Assembly recursivo"
+          },
+          {
+            "label": "Linkar Recursivo",
+            "type": "shell",
+            "command": "gcc",
+            "args": [
+              "-o", "${workspaceFolder}/recursivo.exe",
+              "${workspaceFolder}/recursivo.obj"
+            ],
+            "group": "build",
+            "dependsOn": "Compilar Recursivo",
+            "problemMatcher": [],
+            "detail": "Linka o código Assembly recursivo"
+          },
+          {
+            "label": "Executar Recursivo",
+            "type": "shell",
+            "command": "${workspaceFolder}\\recursivo.exe",
+            "group": "test",
+            "problemMatcher": [],
+            "detail": "Executa o código recursivo"
+          }
+    ]
+}
